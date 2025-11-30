@@ -35,4 +35,4 @@ app.get('/', (req, res) => {
   res.send('working');
 });
 
-app.post('/webhooks', clerkweb); 
+app.use('/webhooks', clerkweb); 
