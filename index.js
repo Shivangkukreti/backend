@@ -21,7 +21,7 @@ main().then(() => {
 async function main() {
   await mongoose.connect(uri); 
 }
-
+app.use('/webhooks', clerkweb); 
 app.use(cors());
 app.use(express.json());
 app.use(clerkMiddleware());
@@ -35,4 +35,3 @@ app.get('/', (req, res) => {
   res.send('working');
 });
 
-app.use('/webhooks', clerkweb); 
