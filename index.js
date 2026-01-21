@@ -28,8 +28,10 @@ app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/`);
 });
 
+
+
+app.use('/webhooks', clerkweb); 
+
 app.get('/', (req, res) => {
   res.send('working');
 });
-
-app.use('/webhooks', clerkweb); 
