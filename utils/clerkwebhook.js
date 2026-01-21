@@ -1,7 +1,7 @@
-import { Webhook } from "svix";
-import { create, findOneAndUpdate, findOneAndDelete } from "../models/user"; 
+const { Webhook } = require("svix");
+const user = require("../models/user"); 
 
-export default async function web(req, res) {
+module.exports = async function web(req, res) {
   try {
     const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET); 
 
@@ -21,7 +21,7 @@ export default async function web(req, res) {
           name: `${data.first_name} ${data.last_name}`,
           image: data.image_url,
         }; 
-        await create(userData);
+        await user.create(userData);
         res.json({});
         break;
       }
@@ -32,13 +32,13 @@ export default async function web(req, res) {
           name: `${data.first_name} ${data.last_name}`,
           image: data.image_url,
         }; 
-        await findOneAndUpdate({ _id: data.id }, userData);
+        await user.findOneAndUpdate({ _id: data.id }, userData);
         res.json({});
         break;
       }
 
       case "user.deleted": {
-        await findOneAndDelete({ _id: data.id });
+        await user.findOneAndDelete({ _id: data.id });
         res.json({});
         break;
       }
