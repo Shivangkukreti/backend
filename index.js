@@ -1,13 +1,10 @@
-const express = require('express');
-//const express=require('express')
-//const router=express.Router()  paste in the router pages
-//module.exports=router
+import express, { json, urlencoded } from 'express';
 const app = express();
-const cors = require('cors');
+import cors from 'cors';
 require('dotenv').config();
-const { clerkMiddleware } = require('@clerk/express');
-const clerkweb = require('./utils/clerkwebhook'); 
-const mongoose = require('mongoose');
+import { clerkMiddleware } from '@clerk/express';
+import clerkweb from './utils/clerkwebhook'; 
+import { connect } from 'mongoose';
 
 const uri = process.env.MONGO_URL; 
 const PORT = process.env.PORT || 5000;
@@ -19,13 +16,13 @@ main().then(() => {
 });
 
 async function main() {
-  await mongoose.connect(uri); 
+  await connect(uri); 
 }
 
 app.use(cors());
-app.use(express.json());
+app.use(json());
 app.use(clerkMiddleware());
-app.use(express.urlencoded({ extended: true }));
+app.use(urlencoded({ extended: true }));
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/`);
