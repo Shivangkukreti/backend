@@ -28,10 +28,11 @@ app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}/`);
 });
 
-
-
 app.use('/webhooks', clerkweb); 
-
+app.use('/user', require('./routes/userroute'));
+app.use('/hotel', require('./routes/hotelroute'));
+app.use('/room', require('./routes/roomroute'));
+app.use('/booking',require('./routes/bookingroute'))
 app.get('/', (req, res) => {
   res.send('working');
 });

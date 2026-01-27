@@ -7,6 +7,7 @@ let sch=new Schema({
     email:{type:String,required:true},
     name:{type:String,required:true},
     image:{type:String,required:true},
+    hashotel:{type:Boolean,default:false}
 })
 
 let user=mongoose.model('user',sch)
