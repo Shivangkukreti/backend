@@ -3,7 +3,7 @@ const router=express.Router()
 const Room=require('../models/room')
 const Hotel=require('../models/hotel')
 const multer = require('multer');
-const {requireAuth}=require('@clerk/express');
+const {requireAuth, clerkClient}=require('@clerk/express');
 const {storage}=require('../utils/cloudinary')
 const upload = multer({ storage: storage }); 
 
@@ -45,7 +45,7 @@ router.get('/getrooms',async(req,res)=>{
 })
 
 
-router.get('/myrooms',requireAuth(),async(req,res)=>{
+router.get('/myrooms',requireAuth(),async(req,res)=>{  
     let hotel=await Hotel.findOne({owner:req.auth.userId})
     let rooms=await Room.find({hotel:hotel._id})
     res.json({success:true,rooms})

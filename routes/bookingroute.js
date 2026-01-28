@@ -2,7 +2,8 @@ const express=require('express')
 const booking = require('../models/booking')
 const Room=require('../models/room')
 const Hotel=require('../models/hotel')
-const {requireAuth}=require('@clerk/express');
+const {requireAuth, clerkClient}=require('@clerk/express');
+const  transporter  = require('../utils/nodemailer');
 const router=express.Router()
 
 
@@ -40,6 +41,16 @@ router.post('/bookroom',requireAuth(),async(req,res)=>{
         guests
     })
     await newbooking.save()
+const myuser = await clerkClient.users.getUser(req.auth.userId);
+    
+let mail={
+    from:process.env.SENDER_EMAIL,
+    to:myuser.emailAddresses[0].emailAddress,
+    subject:"Booking Confirmation",
+    text:`${myuser.firstName} Your booking has been confirmed with booking id ${newbooking._id}. We look forward to hosting you! `  
+}
+await transporter.sendMail(mail)
+
     res.json({success:true,message:"Room booked successfully"})
 })
 

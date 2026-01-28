@@ -15,6 +15,7 @@ let sch=new Schema({
 })
 
 
+
 let booking=mongoose.model('booking',sch)
 module.exports=booking
 
